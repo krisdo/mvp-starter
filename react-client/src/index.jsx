@@ -12,27 +12,44 @@ class App extends React.Component {
     this.state = {
       characters: [{name: 'Batman', wins: 4, url: 'https://www.superherodb.com/pictures2/portraits/10/100/10441.jpg'}, {name: 'Superman', wins: 2, url: 'https://www.superherodb.com/pictures2/portraits/10/100/791.jpg'}, {name: 'Joker', wins: 1, url: 'https://www.superherodb.com/pictures2/portraits/10/100/719.jpg'}],
       computer: {name: 'Penguin', url: 'https://www.superherodb.com/pictures2/portraits/10/100/753.jpg'},
-      user: {name: 'Robin', url: 'https://www.superherodb.com/pictures2/portraits/10/100/850.jpg'},
+      user: {name: 'Robin', url: 'https://media.giphy.com/media/ZtMkorgeyRu5q/giphy.gif'},
       results: {text: 'YOU WON!'},
     }
   }
 
+  fetchStats() {
+    //get request for leadboard
+    fetch('/characters')
+    .then( (data) => {
+      //check what kind of data
+      console.log(data);
+      this.setstate({
+        characters: data
+      })
+    })
+    .catch();
+  }
+
+
+
   search(name) {
     console.log(`Looking for ${name}`);
-    //ajax call to server with name
-
-    //success
-      //set user state and computer state and results
+    //fetch post request to server with name
+      //success
+      //set user state and computer state
 
   }
 
   handleClickEvent(e) {
-    //on click fetch server for computer, character, and results data
+    //on click, send post req the users characters name to server for results data
+    //set the results state with response from server
     e.preventDefault();
     console.log('Fight!');
-    fetch('/results')
+    fetch('/results', {method: 'POST'})
     .then( (res) => {res.jSON()})
-    .then( (data) => {})
+    .then( (data) => {
+      //check what kind of data
+    })
 
 
   }

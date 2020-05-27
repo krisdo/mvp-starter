@@ -23,15 +23,23 @@ app.get('/', function (req, res) {
   });
 });
 
-//send battle results to client
+//send battle results winning or losing text to client
 app.get('/results', (req, res) => {
   console.log('server results')
+
+  //gets data from results schema of mongodb
 });
 
-//gets user from hero api
-app.post('/', (req, res) => {
+//gets characters for both users and computer from hero api
+//does the fight (behind the scenes battle results stored elsewhere)
+  //update battle stats and results in mongodb
+//send user character and computer character back to client
+app.post('/players', (req, res) => {
 
 });
+
+//update the leaderboard
+app.get('/players')
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

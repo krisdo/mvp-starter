@@ -15,18 +15,34 @@ var fight = (players) => {
     + computer.powerstats.intelligence + computer.powerstats.power
     + computer.powerstats.speed + computer.powerstats.strength);
 
+  var results = {};
 
   if(userStats > userStats) {
-    //api request to giphy
-   //You WON!
-    var string = gif();
-    var text = 'You WON!';
-  } else {
-    var string = advice();
-    var text = 'You LOST!';
-  }
+    return gif()
+    .then( (url) =>{
 
-  return gif();
+      results.string = url;
+      results.text = 'You WON!';
+      // console.log(results);
+      return results;
+    })
+    .catch( (err) => {
+      console.log('gif battle err')
+    })
+
+  } else {
+    return advice().
+    then((str) => {
+
+      results.string = str;
+      results.text = 'You LOST!';
+      // console.log(results);
+      return results;
+    })
+    .catch( (err) => {
+      console.log('advice battle err')
+    })
+  }
 
 };
 

@@ -15,9 +15,12 @@ const gif = () => {
       'lang': 'en'
     }}
   }
-  return axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.api_key}&q=superhero dancing&limit=50&offset=0&rating=G&lang=en`)
+  return axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.api_key}&q=dancing superhero&limit=15&offset=0&rating=G&lang=en`)
   .then( (res) => {
-    console.log(res.data.data);
+    // console.log(res.data.data);
+    var gifs = res.data.data;
+    var randomGif = Math.floor(Math.random() * Math.floor(gifs.length-1));
+    return gifs[randomGif].images.original.url;
   })
   .catch( (err) => {
     console.log('Failed to fetch gifs');

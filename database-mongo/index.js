@@ -21,7 +21,22 @@ var battleStatsForCharacterSchema = mongoose.Schema({
 
 var battleStatsForCharacter = mongoose.model('battleStatsForCharacter', battleStatsForCharacterSchema);
 
-var saveBattleStats = function(character) {
+var saveBattleStats = function(characters) {
+//  console.log(characters);
+  characters.forEach( (character) => {
+    battleStatsForCharacter
+    .create({
+      id: character.id,
+      name: character.name,
+      url: character.url
+    })
+    .then( ()=>{
+      console.log('Saved Character to DB');
+    })
+    .catch( (err) => {
+      console.log(err);
+    })
+  })
 
 };
 

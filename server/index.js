@@ -59,7 +59,6 @@ app.post('/characters', (req, res) => {
     return players;
   })
   .then((players) =>{
-
     res.send(JSON.stringify(players));
     return players;
   })

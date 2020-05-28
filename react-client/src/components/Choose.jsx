@@ -27,7 +27,7 @@ class Choose extends React.Component {
       <h4>Time to Battle</h4>
       Enter superhero or villain's name
       <input value={this.state.name} onChange={this.onChange}/>
-       <button onClick={this.search}>Choose a character</button>
+       <button onClick={this.search}>Choose!</button>
     </div>)
   }
 }

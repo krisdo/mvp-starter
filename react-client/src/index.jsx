@@ -11,8 +11,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [{name: 'Batman', wins: 4, url: 'https://www.superherodb.com/pictures2/portraits/10/100/10441.jpg'}, {name: 'Superman', wins: 2, url: 'https://www.superherodb.com/pictures2/portraits/10/100/791.jpg'}, {name: 'Joker', wins: 1, url: 'https://www.superherodb.com/pictures2/portraits/10/100/719.jpg'}],
-      computer: {name: 'Penguin', url: 'https://www.superherodb.com/pictures2/portraits/10/100/753.jpg'},
-      user: {name: 'Robin', url: 'https://media.giphy.com/media/ZtMkorgeyRu5q/giphy.gif'},
+      battle : {
+        user: {name: 'Choose one', url: 'https://media.giphy.com/media/eNdTUcTWKL7O0UvonE/giphy.gif'},
+        computer: {name: '???', url: 'https://media.giphy.com/media/eNdTUcTWKL7O0UvonE/giphy.gif'}
+      },
       results: {text: 'YOU WON!'},
     }
   }
@@ -47,7 +49,17 @@ class App extends React.Component {
 
       fetch('/characters', options)
       .then( (res) => {
-        console.log(`received data from server: ${res}`);
+        return res.json()
+      })
+      .then( (data) => {
+        console.log(data);
+        var user = data[0];
+        var computer = data[1];
+        this.setState({
+          battle: {
+            user: {name: user.name, url: user.image.url},
+            computer: {name: computer.name, url: computer.image.url}
+        }});
       })
       .catch((err) => {
         console.log(err);
@@ -96,10 +108,10 @@ class App extends React.Component {
       <Choose onSearch={this.search.bind(this)}/>
       <table class='table'>
       <tr>
-        <td>{this.state.user.name}</td><td></td><td>{this.state.computer.name}</td>
+        <td>{this.state.battle.user.name}</td><td></td><td>{this.state.battle.computer.name}</td>
       </tr>
       <tr>
-      <td><img src={this.state.user.url} width='200'></img></td><td>VS</td><td><img src={this.state.computer.url} width='200'></img></td>
+      <td><img src={this.state.battle.user.url} width='200'></img></td><td>VS</td><td><img src={this.state.battle.computer.url} width='200'></img></td>
       </tr>
       </table>
       <button onClick={this.handleClickEvent}>Let's Fight!</button>

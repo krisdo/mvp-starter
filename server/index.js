@@ -57,7 +57,7 @@ app.post('/characters', (req, res) => {
   })
   .then((players) =>{
     console.log(players);
-    res.json(players);
+    res.send(JSON.stringify(players));
   })
   .catch((err) => {
     console.log('err on server');

@@ -8,6 +8,7 @@ var superhero = require('../helpers/superhero.js');
 var battle = require('../helpers/battle.js');
 var gif = require('../helpers/gif.js');
 var advice = require('../helpers/advice.js');
+var fight = require('../helpers/battle.js')
 
 var app = express();
 
@@ -33,6 +34,8 @@ app.get('/', function (req, res) {
 
 //send battle results winning or losing text to client
 app.get('/results', (req, res) => {
+
+
   console.log('server results')
 
   //gets data from results schema of mongodb
@@ -56,8 +59,15 @@ app.post('/characters', (req, res) => {
     return players;
   })
   .then((players) =>{
-    console.log(players);
+
     res.send(JSON.stringify(players));
+    return players;
+  })
+  .then( (players) => {
+    return fight(players);
+  })
+  .then( data => {
+    console.log(data);
   })
   .catch((err) => {
     console.log('err on server');

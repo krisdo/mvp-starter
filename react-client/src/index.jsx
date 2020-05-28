@@ -68,12 +68,12 @@ class App extends React.Component {
   }
 
   handleClickEvent(e) {
-    //on click, send post req the users characters name to server for results data
+    //on click, send get req to get results
     //set the results state with response from server
     e.preventDefault();
     console.log('Fight!');
-    fetch('/results', {method: 'POST'})
-    .then( (res) => {res.jSON()})
+    fetch('/results')
+    .then( (res) => {res.json()})
     .then( (data) => {
       //check what kind of data
     })

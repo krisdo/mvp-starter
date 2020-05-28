@@ -4,12 +4,18 @@ require('dotenv').config();
 //send get request to API
 var getCharacterbyName = (name) => {
 
-  return axios.get(`https://superheroapi.com/api/${process.env.superheroTOKEN}/search/${name}`)
+  var options = {
+    url: `https://superheroapi.com/api/${process.env.superheroTOKEN}/search/${name}`,
+  };
+
+  return axios.get(options.url)
   .then( (characters) => {
-      return characters[0];
+    var userCharacter = characters.data.results[0];
+    // console.log(userCharacter);
+    return userCharacter;
   })
   .catch( (err) => {
-    console.log('Cannot Fetch Character')
+    console.log('Cannot Fetch Character for user')
   });
 }
 
@@ -17,20 +23,24 @@ module.exports.getCharacterbyName = getCharacterbyName;
 
 var getOpponent = (character) => {
 
-  //use randomID to get oponent and return players array for battle
-  var players = [character];
+
+  //use randomID to get opponent and return players array for battle
   var randomId = null;
-  while (randomId === null ||  randomId === character.id) {
+
+  while (randomId === null ||  randomId === Number(character.id)) {
     randomId = Math.floor(Math.random() * Math.floor(731));
   }
 
-   return axios.get(`https://superheroapi.com/api/${process.env.superheroTOKEN}/character-${randomId}`)
+   return axios.get(`https://superheroapi.com/api/${process.env.superheroTOKEN}/${randomId}`)
   .then( (character) => {
-    players.push(character);
-    return players;
+    // console.log('computer: ', character.data);
+    var computerCharacter = character.data;
+    // players.push(computerCharacter);
+
+    return computerCharacter;
   })
   .catch( (err) => {
-    console.log('Cannot Fetch Character')
+    console.log('Cannot Fetch Character for computer')
   });
 
 }

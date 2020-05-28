@@ -37,6 +37,21 @@ class App extends React.Component {
     //fetch post request to server with name
       //success
       //set user state and computer state
+      let options = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: name})
+    };
+
+      fetch('/characters', options)
+      .then( (res) => {
+        console.log(`received data from server: ${res}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
   }
 

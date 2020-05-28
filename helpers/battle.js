@@ -26,7 +26,7 @@ var fight = (players) => {
     var text = 'You LOST!';
   }
 
-  // return advice();
+  return gif();
 
 };
 

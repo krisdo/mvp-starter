@@ -10,26 +10,34 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      characters: [{name: 'Batman', wins: 4, url: 'https://www.superherodb.com/pictures2/portraits/10/100/10441.jpg'}, {name: 'Superman', wins: 2, url: 'https://www.superherodb.com/pictures2/portraits/10/100/791.jpg'}, {name: 'Joker', wins: 1, url: 'https://www.superherodb.com/pictures2/portraits/10/100/719.jpg'}],
+      characters: [],
       battle : {
-        user: {name: 'Choose one', url: 'https://media.giphy.com/media/eNdTUcTWKL7O0UvonE/giphy.gif'},
-        computer: {name: '???', url: 'https://media.giphy.com/media/eNdTUcTWKL7O0UvonE/giphy.gif'}
+        user: {id: null, name: 'Choose one', url: 'https://media.giphy.com/media/eNdTUcTWKL7O0UvonE/giphy.gif'},
+        computer: {id: null, name: 'Computer', url: 'https://media.giphy.com/media/eNdTUcTWKL7O0UvonE/giphy.gif'}
       },
-      results: {text: 'YOU WON!'},
-    }
+      results: {heading: null,
+                text: null,
+                advice: null,
+                url: null}
+    },
+    this.handleClickEvent = this.handleClickEvent.bind(this);
+
   }
 
   fetchStats() {
     //get request for leadboard
     fetch('/characters')
+    .then( (res) => {
+      return res.json();
+    })
     .then( (data) => {
-      //check what kind of data
-      console.log(data);
-      this.setstate({
+      this.setState({
         characters: data
       })
     })
-    .catch();
+    .catch((err)=> {
+      if (err) throw err;
+    });
   }
 
 
@@ -52,13 +60,13 @@ class App extends React.Component {
         return res.json()
       })
       .then( (data) => {
-        console.log(data);
+        console.log('Ready to Fight?');
         var user = data[0];
         var computer = data[1];
         this.setState({
           battle: {
-            user: {name: user.name, url: user.image.url},
-            computer: {name: computer.name, url: computer.image.url}
+            user: {id: user.id, name: user.name, url: user.image.url},
+            computer: {id: computer.id, name: computer.name, url: computer.image.url}
         }});
       })
       .catch((err) => {
@@ -68,14 +76,25 @@ class App extends React.Component {
   }
 
   handleClickEvent(e) {
-    //on click, send get req to get results
+    //on click, send post req to get results
     //set the results state with response from server
     e.preventDefault();
     console.log('Fight!');
-    fetch('/results')
-    .then( (res) => {res.json()})
+    fetch('/results').
+    then( (res) => {
+      return res.json();
+    })
     .then( (data) => {
-      //check what kind of data
+      let results = data.data[0];
+      this.setState({
+        results: {heading: 'Results', text: results.text, advice: results.advice, url: results.url}
+      })
+    })
+    .then( () => {
+      this.fetchStats();
+    })
+    .catch( (err) =>{
+      console.log(err);
     })
 
 
@@ -84,21 +103,7 @@ class App extends React.Component {
 
 
   componentDidMount() {
-
-    //send request to server to get data from mongodb to populate leaderboard
-    //populate the last winner
-
-    // $.ajax({
-    //   url: '/items',
-    //   success: (data) => {
-    //     this.setState({
-    //       items: data
-    //     })
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
+    this.fetchStats();
   }
 
   render () {

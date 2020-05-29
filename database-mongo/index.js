@@ -11,7 +11,7 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var battleStatsForCharacterSchema = mongoose.Schema({
+var characterSchema = mongoose.Schema({
   id: {type: Number, unique: true},
   name: String,
   url: String,
@@ -19,52 +19,101 @@ var battleStatsForCharacterSchema = mongoose.Schema({
   losses: Number
 });
 
-var battleStatsForCharacter = mongoose.model('battleStatsForCharacter', battleStatsForCharacterSchema);
+var Character = mongoose.model('Character', characterSchema);
 
-var saveBattleStats = function(characters) {
+var saveBattleStats = function(characters, cb) {
 //  console.log(characters);
-  characters.forEach( (character) => {
-    battleStatsForCharacter
+    characters.forEach( (character) => {
+    return Character
     .create({
       id: character.id,
       name: character.name,
-      url: character.url
+      url: character.image.url,
+      wins: 0,
+      losses: 0
     })
-    .then( ()=>{
-      console.log('Saved Character to DB');
+    .then( () => {
+      console.log(`${character.name} saved to DB`);
     })
     .catch( (err) => {
-      console.log(err);
-    })
-  })
-
+      console.log(`${character.name} not saved to DB`);
+    });
+  });
+  return cb(characters);
 };
 
 module.exports.saveBattleStats = saveBattleStats;
 
-var displayTopStats = () => {
+var addFightStats = (character, str) => {
+
+  if(str === 'wins') {
+    // console.log('add fight stats 1');
+  return Character
+  .findOneAndUpdate({id: character.id}, { $inc: {wins: 1} })
+  .exec( () => {
+    console.log(`Updated ${str} for ${character.name} in DB`);
+  })
+  .catch( (err) => {
+    console.log('err on db update: ', err);
+  })
+  } else {
+    return Stat
+    .findOneAndUpdate({id: character.id}, { $inc: {losses: 1} })
+    .exec( () => {
+      console.log(`Updated ${str} for ${character.name} in DB`);
+    })
+    .catch( (err) => {
+      console.log('err on db update: ', err);
+    })
+  }
+};
+module.exports.addFightStats = addFightStats;
+
+var displayTopStats = (cb) => {
+
+  Character
+  .find({})
+  .sort({wins: -1})
+  .limit(3)
+  .exec((err, data) => {
+    cb(err, data);
+  })
 
 };
 
 module.exports.displayTopStats = displayTopStats;
 
 var battleSchema = mongoose.Schema({
-  name: String,
-  results: String,
+  text: String,
   advice: String,
   url: String
 });
 
 var Battle = mongoose.model('Battle', battleSchema);
 
-var addResults = (Results) =>{
+var addResults = (results) =>{
+
+    Battle.update({
+    text: results.text,
+    advice: results.advice,
+    url: results.url}, (err, raw) => {
+      if (err) {
+        console.log('cannot add results');
+      }
+    });
 
 };
 
 module.exports.addResults = addResults;
 
-var displayResults = (name) => {
+var displayResults = (cb) => {
 
+  Battle
+  .find({})
+  .exec( (err, data) => {
+    if(err) throw err;
+    cb(data);
+  });
 
 };
 

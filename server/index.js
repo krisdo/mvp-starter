@@ -8,7 +8,8 @@ var superhero = require('../helpers/superhero.js');
 var battle = require('../helpers/battle.js');
 var gif = require('../helpers/gif.js');
 var advice = require('../helpers/advice.js');
-var fight = require('../helpers/battle.js')
+var fight = require('../helpers/battle.js');
+var battleDB = require('../database-mongo/index.js');
 
 var app = express();
 
@@ -35,7 +36,9 @@ app.get('/', function (req, res) {
 //send battle results winning or losing text to client
 app.get('/results', (req, res) => {
 
-
+  battleDB.displayResults((data)=> {
+    res.json({data});
+  });
   console.log('server results')
 
   //gets data from results schema of mongodb
@@ -63,10 +66,19 @@ app.post('/characters', (req, res) => {
     return players;
   })
   .then( (players) => {
-    return fight(players);
+    return battleDB.saveBattleStats(players, () => {
+      return fight(players);
+    });
+
+  })
+  .then( (results) => {
+
+     console.log(results);
+     return battleDB.addResults(results);
   })
   .then( data => {
-    console.log(data);
+    console.log('done?')
+    // console.log(data);
   })
   .catch((err) => {
     console.log('err on server');
@@ -76,7 +88,12 @@ app.post('/characters', (req, res) => {
 });
 
 //update the leaderboard
-app.get('/characters')
+app.get('/characters', (req, res) => {
+  battleDB.displayTopStats((err, data) => {
+    if(err) throw err;
+    res.json(data);
+  })
+})
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

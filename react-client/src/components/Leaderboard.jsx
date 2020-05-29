@@ -3,7 +3,7 @@ import TopCharacters from './TopCharacters.jsx';
 
 const Leaderboard = (props) => (
   <div>
-    <h4>The top { props.characters.length } super heroes or villains.</h4>
+    <h4>The top 3 super heroes or villains.</h4>
     <table>{ props.characters.map( (character) => <TopCharacters character={character}/>) }</table>
   </div>
 )

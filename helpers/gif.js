@@ -15,7 +15,7 @@ const gif = () => {
       'lang': 'en'
     }}
   }
-  return axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.api_key}&q=dancing superhero&limit=15&offset=0&rating=G&lang=en`)
+  return axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.api_key}&q=superhero dancing&limit=15&offset=0&rating=G&lang=en`)
   .then( (res) => {
     // console.log(res.data.data);
     var gifs = res.data.data;

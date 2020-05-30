@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Leaderboard from './components/Leaderboard.jsx';
 import Choose from './components/Choose.jsx';
 import Results from './components/Results.jsx';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Card} from 'react-bootstrap';
 // import { Button } from 'react-bootstrap';
 
 
@@ -110,33 +110,29 @@ class App extends React.Component {
 
   render () {
     return (<div>
-      <div class="jumbotron text-center text-dark" variant="dark">
+      <Container className="jumbotron text-center text-dark-50 bg-secondary" variant="primary">
         <h1 class='mx-auto'>Super Fight Club</h1>
-        <p><small class="text-muted">The first rule of Super Fight Club is: You do not talk about Super Fight Club. The second rule of Super Fight Club is: You do not talk about Super Fight Club. Third rule of Super Fight Club is: HAVE fun!</small></p>
-      </div>
-      <div variant="secondary" class="mx-auto center-text">
-      <Container>
-        <div class="text-center" className="justify-content-center">
+        <p><small class="text-white-50">The first rule of Super Fight Club is: You do not talk about Super Fight Club. The second rule of Super Fight Club is: You do not talk about Super Fight Club. Third rule of Super Fight Club is: HAVE fun!</small></p>
+      </Container>
         <Leaderboard class="text-center" characters={this.state.characters}/>
-        </div>
-        <Choose class="mx-auto center-text" onSearch={this.search.bind(this)}/>
+        <Choose class="text-center" onSearch={this.search.bind(this)}/>
+      <Container variant="primary" className="text-center mx-auto bg-secondary" variant="dark">
         <Row>
-          <Col center="xs">{this.state.battle.user.name}</Col>
+          <Col center="xs"><h6 class="text-light">{this.state.battle.user.name}</h6></Col>
           <Col></Col>
-          <Col center="xs">{this.state.battle.computer.name}</Col>
+          <Col center="xs"><h6 class="text-light">{this.state.battle.computer.name}</h6></Col>
         </Row>
         <Row>
           <Col><img src={this.state.battle.user.url} width='200'class="rounded"></img></Col>
-          <Col center="xs">VS</Col>
+          <Col center="xs"><img src="https://media.giphy.com/media/eiXQYAYkIu6n6U2Aoe/giphy.gif" width='100'></img></Col>
           <Col><img src={this.state.battle.computer.url} width='200' class="rounded"></img></Col>
         </Row>
         <div class="text-center">
-        <Button size="large" onClick={this.handleClickEvent}>Let's Fight!</Button>
+        <Button size="large" variant="dark" onClick={this.handleClickEvent}>Let's Fight!</Button>
 
         <Results user={this.state.user} computer={this.state.computer} results={this.state.results}/>
         </div>
       </Container>
-      </div>
       </div>
       )
     // return (<div>

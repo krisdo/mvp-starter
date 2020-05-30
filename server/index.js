@@ -76,14 +76,6 @@ app.post('/characters', (req, res) => {
     })
 
   })
-  // .then((results) => {
-  //    console.log(results);
-  //    return battleDB.addResults(results);
-  // })
-  // .then( data => {
-  //   // console.log('done?')
-  //   // console.log(data);
-  // })
   .catch((err) => {
     console.log(err);
   });

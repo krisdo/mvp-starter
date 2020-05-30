@@ -26,11 +26,14 @@ class Choose extends React.Component {
 
   render() {
     return (
-    <Container class="center-text py-8 mt-10 mb-10" >
+      <Container className="text-center mx-auto bg-secondary" variant="dark">
       <h4 class="center-text">Time to Battle</h4>
-      <p class="center-text" >Enter superhero or villain's name</p>
+      <p class="center-text small" >Enter superhero or villain's name</p>
       <input class="center-text" value={this.state.name} onChange={this.onChange}/>
-      <Button variant="dark" class="center-text"  onClick={this.search}>Choose!</Button>
+
+        <Button variant="dark" class="center-text"  onClick={this.search}>Choose!
+        </Button>
+
     </Container>
     )
 }

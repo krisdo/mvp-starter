@@ -137,7 +137,7 @@ var addResults = (results) =>{
       advice: results.advice,
       url: results.url};
 
-    Battle.findOneAndUpdate({},
+    Battle.findOneAndUpdate(doc,
       doc, {
         new: true,
         upsert: true // Make this update into an upsert

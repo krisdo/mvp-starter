@@ -66,22 +66,26 @@ app.post('/characters', (req, res) => {
     return players;
   })
   .then( (players) => {
-    return battleDB.saveBattleStats(players, () => {
-      return fight(players);
-    });
+    battleDB.saveBattleStats(players)
+    .then( () => {
+       fight(players);
+    })
+    .catch((err) =>{
+      // if (err) console.log(err);
+      fight(players);
+    })
 
   })
-  .then( (results) => {
-
-     console.log(results);
-     return battleDB.addResults(results);
-  })
-  .then( data => {
-    console.log('done?')
-    // console.log(data);
-  })
+  // .then((results) => {
+  //    console.log(results);
+  //    return battleDB.addResults(results);
+  // })
+  // .then( data => {
+  //   // console.log('done?')
+  //   // console.log(data);
+  // })
   .catch((err) => {
-    console.log('err on server');
+    console.log(err);
   });
 
 

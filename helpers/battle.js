@@ -26,14 +26,20 @@ var fight = (players) => {
        battleDB.addFightStats(computer, 'losses');
     })
     .then( () => {
-      return gif();
-    })
-    .then( (url) =>{
-      results.url = url;
-      results.advice = null;
-      results.text = 'You WON!';
-      console.log(results);
-      return results;
+      gif()
+      .then( (url) =>{
+        results.url = url;
+        results.advice = null;
+        results.text = 'You WON!';
+        console.log(url);
+        return results;
+      })
+      .then( (results) =>{
+        battleDB.addResults(results);
+      })
+      .catch( (err) => {
+        console.log('gif url err');
+      })
     })
     .catch( (err) => {
       console.log('gif battle err')
@@ -46,17 +52,23 @@ var fight = (players) => {
        battleDB.addFightStats(computer, 'wins');
     })
     .then( () => {
-      return advice();
+      advice()
+      .then((str) => {
+        results.url = null;
+        results.advice = `A piece of advice for you: "${str}"`;
+        results.text = 'You LOST!';
+        console.log(str);
+        return results;
+      })
+      .then( (results) =>{
+        battleDB.addResults(results);
+      })
+      .catch( (err) => {
+        console.log('advice str err')
+      })
     })
-    .then((str) => {
-      results.url = null;
-      results.advice = `A piece of advice for you: "${str}"`;
-      results.text = 'You LOST!';
-      console.log(results);
-      return results;
-    })
-    .catch( (err) => {
-      console.log('advice battle err')
+    .catch((err) => {
+      console.log('advice batte err')
     })
   }
 

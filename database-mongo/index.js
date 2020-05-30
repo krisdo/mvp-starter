@@ -24,28 +24,49 @@ var Character = mongoose.model('Character', characterSchema);
 var saveBattleStats = function(characters, cb) {
 //  console.log(characters);
 
-    return Character
-    .create({
-      id: character.id,
+    var docs = characters.map( (character) => {
+      return {id: character.id,
       name: character.name,
       url: character.image.url,
       wins: 0,
-      losses: 0
-    }, {
-      id: character.id,
-      name: character.name,
-      url: character.image.url,
-      wins: 0,
-      losses: 0
-    })
-    .then( () => {
-      console.log(`${character.name} saved to DB`);
-    })
-    .catch( (err) => {
-      console.log(`${character.name} not saved to DB`);
+      losses: 0};
     });
 
-  return cb(characters);
+    return Character.create(docs)
+     .then( () => {
+       console.log('saved to DB');
+     })
+     .catch( (err) => {
+       console.log('not saved to DB');
+     });
+
+// return Character.findOne({id: characters[0].id})
+//   .then( (res) => {
+//     if (res === null) {
+//       Character.create({id: character[0].id,
+//         name: character[0].name,
+//         url: character[0].image.url,
+//         wins: 0,
+//         losses: 0
+//       })
+//     }
+// })
+// .then( () => {
+//   Character.findOne({id: characters[1].id})
+//   .then( (res) => {
+//     if (res === null) {
+//       Character.create({id: character[1].id,
+//         name: character[1].name,
+//         url: character[1].image.url,
+//         wins: 0,
+//         losses: 0
+//       })
+//     }
+//   })
+// })
+
+
+
 };
 
 module.exports.saveBattleStats = saveBattleStats;
@@ -63,7 +84,7 @@ var addFightStats = (character, str) => {
     console.log('err on db update: ', err);
   })
   } else {
-    return Stat
+    return Character
     .findOneAndUpdate({id: character.id}, { $inc: {losses: 1} })
     .exec( () => {
       console.log(`Updated ${str} for ${character.name} in DB`);

@@ -126,9 +126,9 @@ class App extends React.Component {
           <Col center="xs">{this.state.battle.computer.name}</Col>
         </Row>
         <Row>
-          <Col><img src={this.state.battle.user.url} width='200'></img></Col>
+          <Col><img src={this.state.battle.user.url} width='200'class="rounded"></img></Col>
           <Col center="xs">VS</Col>
-          <Col><img src={this.state.battle.computer.url} width='200'></img></Col>
+          <Col><img src={this.state.battle.computer.url} width='200' class="rounded"></img></Col>
         </Row>
         <div class="text-center">
         <Button size="large" onClick={this.handleClickEvent}>Let's Fight!</Button>

@@ -123,21 +123,17 @@ var Battle = mongoose.model('Battle', battleSchema);
 
 var addResults = (results) =>{
 
-    // Battle.update({
-    // text: results.text,
-    // advice: results.advice,
-    // url: results.url}, (err, raw) => {
-    //   if (err) {
-    //     console.log('cannot add results');
-    //   }
-    // });
+  var doc = {
+    text: results.text,
+    advice: results.advice,
+    url: results.url};
 
-    var doc = {
-      text: results.text,
-      advice: results.advice,
-      url: results.url};
+    Battle.update(doc, (err, raw) => {
+      if (err) {
+        console.log('cannot add results');
+      }
+    });
 
-    Battle.create(doc);
 
 };
 

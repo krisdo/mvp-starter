@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/superhero');
-// mongoose.connect(process.env.MONGODB_URI, {
-//   useMongoClient: true
-// });
+const path = process.env.MONGODB_URI || 'mongodb://localhost/superhero';
+// mongoose.connect('mongodb://localhost/superhero');
+mongoose.connect(path, {
+  useMongoClient: true
+});
 var db = mongoose.connection;
 
 

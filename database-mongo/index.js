@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/superhero');
-mongoose.connect(process.env.MONGODB_URI, {
-  useMongoClient: true
-});
+mongoose.connect('mongodb://localhost/superhero');
+// mongoose.connect(process.env.MONGODB_URI, {
+//   useMongoClient: true
+// });
 var db = mongoose.connection;
 
 

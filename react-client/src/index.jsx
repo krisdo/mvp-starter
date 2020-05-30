@@ -124,7 +124,7 @@ class App extends React.Component {
         </Row>
         <Row>
           <Col><img src={this.state.battle.user.url} width='200'class="rounded"></img></Col>
-          <Col center="xs"><img src="https://media.giphy.com/media/eiXQYAYkIu6n6U2Aoe/giphy.gif" width='100'></img></Col>
+          <Col center="xs" className="align-middle"><img src="https://media.giphy.com/media/eiXQYAYkIu6n6U2Aoe/giphy.gif" width='100'></img></Col>
           <Col><img src={this.state.battle.computer.url} width='200' class="rounded"></img></Col>
         </Row>
         <div class="text-center">

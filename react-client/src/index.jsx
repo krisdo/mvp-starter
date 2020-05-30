@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Leaderboard from './components/Leaderboard.jsx';
 import Choose from './components/Choose.jsx';
 import Results from './components/Results.jsx';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 
 
 class App extends React.Component {
@@ -108,20 +110,50 @@ class App extends React.Component {
 
   render () {
     return (<div>
-      <h1>Super Fight Club</h1>
-      <Leaderboard characters={this.state.characters}/>
-      <Choose onSearch={this.search.bind(this)}/>
-      <table class='table'>
-      <tr>
-        <td>{this.state.battle.user.name}</td><td></td><td>{this.state.battle.computer.name}</td>
-      </tr>
-      <tr>
-      <td><img src={this.state.battle.user.url} width='200'></img></td><td>VS</td><td><img src={this.state.battle.computer.url} width='200'></img></td>
-      </tr>
-      </table>
-      <button onClick={this.handleClickEvent}>Let's Fight!</button>
-      <Results user={this.state.user} computer={this.state.computer} results={this.state.results}/>
-    </div>)
+      <div class="jumbotron text-center text-dark" variant="dark">
+        <h1 class='mx-auto'>Super Fight Club</h1>
+        <p><small class="text-muted">The first rule of Super Fight Club is: You do not talk about Super Fight Club. The second rule of Super Fight Club is: You do not talk about Super Fight Club. Third rule of Super Fight Club is: HAVE fun!</small></p>
+      </div>
+      <div variant="secondary" class="mx-auto center-text">
+      <Container>
+        <div class="text-center" className="justify-content-center">
+        <Leaderboard class="text-center" characters={this.state.characters}/>
+        </div>
+        <Choose class="mx-auto center-text" onSearch={this.search.bind(this)}/>
+        <Row>
+          <Col center="xs">{this.state.battle.user.name}</Col>
+          <Col></Col>
+          <Col center="xs">{this.state.battle.computer.name}</Col>
+        </Row>
+        <Row>
+          <Col><img src={this.state.battle.user.url} width='200'></img></Col>
+          <Col center="xs">VS</Col>
+          <Col><img src={this.state.battle.computer.url} width='200'></img></Col>
+        </Row>
+        <div class="text-center">
+        <Button size="large" onClick={this.handleClickEvent}>Let's Fight!</Button>
+
+        <Results user={this.state.user} computer={this.state.computer} results={this.state.results}/>
+        </div>
+      </Container>
+      </div>
+      </div>
+      )
+    // return (<div>
+    //   <h1>Super Fight Club</h1>
+    //   <Leaderboard characters={this.state.characters}/>
+    //   <Choose onSearch={this.search.bind(this)}/>
+    //   <table class='table'>
+    //   <tr>
+    //     <td>{this.state.battle.user.name}</td><td></td><td>{this.state.battle.computer.name}</td>
+    //   </tr>
+    //   <tr>
+    //   <td><img src={this.state.battle.user.url} width='200'></img></td><td>VS</td><td><img src={this.state.battle.computer.url} width='200'></img></td>
+    //   </tr>
+    //   </table>
+    //   <button onClick={this.handleClickEvent}>Let's Fight!</button>
+    //   <Results user={this.state.user} computer={this.state.computer} results={this.state.results}/>
+    // </div>)
   }
 }
 

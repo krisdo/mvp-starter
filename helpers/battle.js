@@ -32,7 +32,7 @@ var fight = (players) => {
       results.url = url;
       results.advice = null;
       results.text = 'You WON!';
-      // console.log(results);
+      console.log(results);
       return results;
     })
     .catch( (err) => {
@@ -52,7 +52,7 @@ var fight = (players) => {
       results.url = null;
       results.advice = `A piece of advice for you: "${str}"`;
       results.text = 'You LOST!';
-      // console.log(results);
+      console.log(results);
       return results;
     })
     .catch( (err) => {

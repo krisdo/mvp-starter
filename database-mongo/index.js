@@ -23,9 +23,15 @@ var Character = mongoose.model('Character', characterSchema);
 
 var saveBattleStats = function(characters, cb) {
 //  console.log(characters);
-    characters.forEach( (character) => {
+
     return Character
     .create({
+      id: character.id,
+      name: character.name,
+      url: character.image.url,
+      wins: 0,
+      losses: 0
+    }, {
       id: character.id,
       name: character.name,
       url: character.image.url,
@@ -38,7 +44,7 @@ var saveBattleStats = function(characters, cb) {
     .catch( (err) => {
       console.log(`${character.name} not saved to DB`);
     });
-  });
+
   return cb(characters);
 };
 

@@ -1,11 +1,13 @@
 import React from 'react';
+import { Container, Col, Row, Image } from 'react-bootstrap';
 
 const TopCharacters = (props) => (
-  <tr>
-    <td><img src={props.character.url} width='100'></img></td>
-    <td>{props.character.name}</td>
-    <td>{props.character.wins} wins</td>
-  </tr>
+  <div class="col justify-content-center">
+      <Row md="auto" center="xs" class="text-center">{props.character.name}</Row>
+      <Row md="auto" ><img src={props.character.url} width='100' class="rounded"></img></Row>
+      <Row md="auto" center="xs">{props.character.wins} wins</Row>
+  </div>
+
 )
 
 export default TopCharacters;

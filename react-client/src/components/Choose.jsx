@@ -1,4 +1,6 @@
 import React from 'react';
+import { Container, Row, Button } from 'react-bootstrap';
+
 // import TopCharacters from './TopCharacters.jsx';
 
 class Choose extends React.Component {
@@ -23,13 +25,15 @@ class Choose extends React.Component {
   }
 
   render() {
-    return (<div>
-      <h4>Time to Battle</h4>
-      Enter superhero or villain's name
-      <input value={this.state.name} onChange={this.onChange}/>
-       <button onClick={this.search}>Choose!</button>
-    </div>)
-  }
+    return (
+    <Container class="center-text py-8 mt-10 mb-10" >
+      <h4 class="center-text">Time to Battle</h4>
+      <p class="center-text" >Enter superhero or villain's name</p>
+      <input class="center-text" value={this.state.name} onChange={this.onChange}/>
+      <Button variant="dark" class="center-text"  onClick={this.search}>Choose!</Button>
+    </Container>
+    )
+}
 }
 
 // const Battle = (props) => (

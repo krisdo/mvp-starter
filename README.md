@@ -20,11 +20,12 @@
 
 ## Install and Setup
 Within root directory:
+
 ```sh
 $ npm install
 $ npm build
 $ npm start
-```sh
+```
 
 ## Deployment
 - Heroku
